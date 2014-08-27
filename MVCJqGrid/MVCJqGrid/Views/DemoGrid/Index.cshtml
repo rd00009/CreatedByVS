@@ -1,0 +1,59 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/Scripts/Jqgrid/src/css/ui.jqgrid.css" rel="stylesheet" media="all" />
+    <link href="~/Scripts/Jqgrid/css/jquery-ui-1.10.4.custom.css" rel="stylesheet" />
+    <script src="~/Scripts/Jqgrid/js/jquery-1.11.0.min.js"></script>
+    <script src="~/Scripts/Jqgrid/js/jquery.jqGrid.src.js"></script>
+    <script src="~/Scripts/Jqgrid/js/i18n/grid.locale-en.js"></script>
+    
+</head>
+<body>
+    <div>       
+<table id="list"></table>      
+        <div id="pager"></div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            debugger
+            $.extend(jQuery.jgrid.defaults, {
+                prmNames: {
+                    page: "page", rows: "size", order: "dir", sort: "sort"
+                }
+            });
+            jQuery("#list").jqGrid({
+                url: '@Url.Content("/DemoGrid/GridData")',
+                datatype: "json",
+                colNames: ['DriverId', 'DriverCode', 'StateLocation', 'DriverName', 'Company', 'Street', 'City'],
+                colModel: [{ name: 'DriverId', index: 'DriverId', width: 55,editable:true },
+                            { name: 'DriverCode', index: 'DriverCode', width: 90, editable: true },
+                            { name: 'StateLocation', index: 'StateLocation', width: 100, editable: true },
+                            { name: 'DriverName', index: 'DriverName', width: 80, align: "right", editable: true },
+                            { name: 'Company', index: 'Company', width: 80, align: "right", editable: true },
+                            { name: 'Street', index: 'Street', width: 80, align: "right", editable: true },
+                            { name: 'City', index: 'City', width: 150, editable: true }],
+                rowNum: 10,
+                rowList: [10, 20, 30],
+                pager: '#pager',
+                width: '1000',
+                height:'234',
+                sortname: 'DriverId',
+                viewrecords: true,
+                sortorder: "desc",
+                caption: "Full Demo For JqGrid",
+                editurl: "@Url.Content("/DemoGrid/GridDataEdit")"
+         
+            }).navGrid("#pager", { edit: true, add: true, del: true });
+           
+            $("#list").jqGrid('filterToolbar', { defaultSearch: 'co', searchOnEnter: false, stringResult: true });
+        });
+    </script>
+</body>
+</html>
